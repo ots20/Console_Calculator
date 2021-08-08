@@ -29,7 +29,7 @@ def greet():
     print("-Type two values to work with, then use one of these operators: '+', '-', '*', '/'")
     print("-You're able to finish the program at any stage by typing 'exit'")
     name = input('Hello, what is your name?: ')
-    while len(name) < 1:
+    while len(name) < 1 or name.isspace():
         name = input('You need to type your name: ')
     else:
         exit_program(name)
@@ -90,8 +90,7 @@ def calculate():
         result = op(float(value1), float(value2))
         result = round(result, 3)
 
-    print("{} {} {} = ".format(round(value1, 3), x, round(value1, 3)))
-    print(str(result))
+    print("{} {} {} = {}".format(round(value1, 3), x, round(value2, 3), str(result)))
     again()
 
 
