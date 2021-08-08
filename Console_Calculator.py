@@ -26,6 +26,8 @@ def exit_program(value):
 
 # Function to greet only the 1st time the calculator is run
 def greet():
+    print("-Type two values to work with, then use one of these operators: '+', '-', '*', '/'")
+    print("-You're able to finish the program at any stage by typing 'exit'")
     name = input('Hello, what is your name?: ')
     while len(name) < 1:
         name = input('You need to type your name: ')
@@ -62,6 +64,8 @@ def calculate():
         '/': operator.truediv
     }
 
+
+
     # value1 = input('Type the first value: ')
     # print("Type the first value")
     first = "first"
@@ -84,8 +88,9 @@ def calculate():
     else:
         op = opValidation.get(x)
         result = op(float(value1), float(value2))
+        result = round(result, 3)
 
-    print("{} {} {} = ".format(value1, x, value2))
+    print("{} {} {} = ".format(round(value1, 3), x, round(value1, 3)))
     print(str(result))
     again()
 
