@@ -1,0 +1,36 @@
+Calculator checklist
+
+
++++++ Positive scenarios +++++
+
+- Verify the instructions are displayed at the first run
+- Verify the program asks you for these inputs:
+    - name
+    - first value
+    - second value
+    - math operator
+- Type your real name
+- Type alphanumeric characters as your name
+- Type numbers as your name
+- Verify the user is greet with his/her name
+- Type two integers as first & second value
+- Type two floats as first & second value
+- Type an integer as first value and a float as second value
+- Type a float as first value and an integer as second value
+- Verify the operation performed is displayed with its result below
+- Type ‘exit’ in any stage of the program
+- Verify the  ‘repeat operation’ prompt is displayed after performing an operation
+- Run again the program after performing an operation by typing ‘Y’ in the ‘repeat operation’ prompt
+- Exit the program after performing an operation by typing ‘N’ in the ‘repeat operation’ prompt
+- Verify the ‘bye’ message when selecting to terminate the program:
+    - At any stage
+    - By terminating the program in the ‘repeat operation’ prompt
+- Verify the instructions and name prompt are not displayed when performing another operation
+
+
+- - - - Negative scenarios - - - -
+
+- The prompt to input a name keeps displaying if no valid string is typed (i.e. a blank space)
+- ‘Not a number!’ error message is displayed if an input different than a number is typed as first or second values
+- ‘Unknown operator’ error message is displayed if an invalid math operator is entered when asked
+- The ‘repeat operation’ prompt keeps displaying if none of the options is chosen (Y or N)

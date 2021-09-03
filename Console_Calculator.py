@@ -1,97 +1,44 @@
-# Function to validate if the user inputs a number
-def check_user_input(string):
-    while True:
-        num = input("Type the {} value: ".format(string))
-        exit_program(num)
-        try:
-            value = int(num)
-            return value
-        except ValueError:
-            # print("Not a number!")
-            try:
-                value = float(num)
-                return value
-            except ValueError:
-                print("Not a number!")
+from methods import Validation
+# from methods import *
+
+v = Validation()
 
 
-# Validates the input entered by the user to whether or not to end the program on any stage
-def exit_program(value):
-    if value == "exit":
-        print("Terminating program, bye")
-        quit()
-    else:
-        return
-
-
-# Function to greet only the 1st time the calculator is run
-def greet():
-    print("-Type two values to work with, then use one of these operators: '+', '-', '*', '/'")
-    print("-You're able to finish the program at any stage by typing 'exit'")
-    name = input('Hello, what is your name?: ')
-    while len(name) < 1 or name.isspace():
-        name = input('You need to type your name: ')
-    else:
-        exit_program(name)
-        print("Hello " + name)
-        calculate()
-
-
-
-def again():
-    calc_again = input('''
-Do you want to calculate again?
-Please type Y for YES or N for NO.
-''')
-
-    if calc_again.upper() == 'Y':
-        # print("Hello again!")
-        calculate()
-    elif calc_again.upper() == 'N':
-        print('See you later.')
-    else:
-        again()
-
-
+# Method where user inputs data and other methods are called to make the proper validations
 def calculate():
-    # Validate the operator typed by the user is within the options
-    import operator
+    n1 = False
+    n2 = False
+    op = None
+    calc_again = False
 
-    opValidation = {
-        '+': operator.add,
-        '-': operator.sub,
-        '*': operator.mul,
-        '/': operator.truediv
-    }
+    v.greet("Omar")
 
+    while not n1:
+        n1 = input('Type the first value: ')
+        v.exit_program(n1)
+        n1 = v.check_user_input(n1)
 
-
-    # value1 = input('Type the first value: ')
-    # print("Type the first value")
-    first = "first"
-    value1 = check_user_input(first)
-
-
-    # print("Type the second value")
-    second = "second"
-    value2 = check_user_input(second)
-
-    x = input('Type the operation to perform: ')
-    exit_program(x)
-
-    # validating the operator entered
-    op = opValidation.get(x)
+    while not n2:
+        n2 = input('Type the second value: ')
+        v.exit_program(n2)
+        n2 = v.check_user_input(n2)
 
     while op is None:
-        x = input("Unknown operator, enter it again: ")
-        op = opValidation.get(x)
-    else:
-        op = opValidation.get(x)
-        result = op(float(value1), float(value2))
-        result = round(result, 3)
+        x = input('Type the operator symbol: ')
+        v.exit_program(x)
+        op = v.op_validator(x)
 
-    print("{} {} {} = {}".format(round(value1, 3), x, round(value2, 3), str(result)))
-    again()
+    # this does the calculation
+    v.do_math(n1, n2, op, x)
+
+    while not calc_again:
+        calc_again = input('''
+Do you want to calculate again?
+Please type Y for YES or N for NO.
+        ''')
+        calc_again = v.again(calc_again)
+
+    calculate()
 
 
-greet()
+calculate()
