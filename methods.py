@@ -19,24 +19,26 @@ class Validation:
     def exit_program(self, value):
         if value == "exit":
             print("Terminating program, bye")
-            quit()
+            return True
+            # quit()
         else:
-            return
+            return False
 
     # Method to greet only the 1st time the calculator is run
     def greet(self, username):
-        print("-Type two values to work with, then use one of these operators: '+', '-', '*', '/'")
-        print("-You're able to finish the program at any stage by typing 'exit'")
         name = username
         # if name is None or len(name) < 1 or name.isspace():
         #     print("Hey, you need to type your name")
         #     name = input()
-        while name is None or len(name) < 1 or name.isspace():
-            print("You need to type your name")
-            name = input()
+        if name is None or len(name) < 1 or name.isspace():
+            return None
+            # print("You need to type your name")
+            # name = input()
         else:
-            self.exit_program(name)
+            if self.exit_program(name):
+                return False
             print("Hello " + name)
+            return True
 
     # Method to validate the operator typed by the user is within the supported math operations
     def op_validator(self, op):
@@ -58,6 +60,7 @@ class Validation:
         result = op(float(val1), float(val2))
         result = round(result, 3)
         print("{} {} {} = {}".format(round(val1, 3), string, round(val2, 3), str(result)))
+        return result
 
     # Method to ask to make another calculation or to exit
     def again(self, choice):
@@ -66,7 +69,6 @@ class Validation:
             return True
         elif choice.upper() == 'N':
             print('See you later!')
-            quit()
-            # return True
+            return None
         else:
             return False
