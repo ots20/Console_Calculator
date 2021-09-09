@@ -27,6 +27,40 @@ class NameValidator(unittest.TestCase):
         self.assertFalse(self.validation.greet(self.exit))
 
 
+class InputValue(unittest.TestCase):
+    def setUp(self):
+        self.validation = Validation()
+        self.valid_int = 2
+        self.valid_int2 = 1000000
+        self.valid_int3 = -50
+        self.valid_int4 = 0
+        # Floats are sent in a string but returned by the method as float
+        self.valid_float = "3.5"
+        self.valid_float2 = "10000000000000009.1234567890"
+        self.valid_float3 = "-.5"
+        self.invalid1 = "Test"
+        self.invalid2 = ""
+        self.invalid3 = " "
+        self.invalid4 = "+"
+
+    def test_valid_int(self):
+        self.assertEqual(self.validation.check_user_input(self.valid_int), 2)
+        self.assertEqual(self.validation.check_user_input(self.valid_int2), 1000000)
+        self.assertEqual(self.validation.check_user_input(self.valid_int3), self.valid_int3)
+        self.assertEqual(self.validation.check_user_input(self.valid_int4), self.valid_int4)
+
+    def test_valid_float(self):
+        self.assertEqual(self.validation.check_user_input(self.valid_float), float(self.valid_float))
+        self.assertEqual(self.validation.check_user_input(self.valid_float2), float(self.valid_float2))
+        self.assertEqual(self.validation.check_user_input(self.valid_float3), float(self.valid_float3))
+
+    def test_invalid_input(self):
+        self.assertIsNone(self.validation.check_user_input(self.invalid1))
+        self.assertIsNone(self.validation.check_user_input(self.invalid2))
+        self.assertIsNone(self.validation.check_user_input(self.invalid3))
+        self.assertIsNone(self.validation.check_user_input(self.invalid4))
+
+
 class ExitValidator(unittest.TestCase):
 
     def setUp(self):
@@ -54,6 +88,9 @@ class OperatorValidator(unittest.TestCase):
         self.valid_multiplication = "*"
         self.valid_division = "/"
         self.not_valid = "%"
+        self.not_valid2 = " "
+        self.not_valid3 = "Test"
+        self.not_valid4 = 2
 
     def test_valid_operators(self):
         self.assertIsNotNone(self.validation.op_validator(self.valid_sum))
@@ -62,22 +99,92 @@ class OperatorValidator(unittest.TestCase):
         self.assertIsNotNone(self.validation.op_validator(self.valid_division))
 
     def test_invalid_operator(self):
-        validate = self.validation.op_validator(self.not_valid)
-        self.assertIsNone(validate)
+        self.assertIsNone(self.validation.op_validator(self.not_valid))
+        self.assertIsNone(self.validation.op_validator(self.not_valid2))
+        self.assertIsNone(self.validation.op_validator(self.not_valid3))
+        self.assertIsNone(self.validation.op_validator(self.not_valid4))
 
 
-# class Greetings(unittest.TestCase):
-#
-#     # def setUp(self):
-#
-#
-# class SumValues(unittest.TestCase):
-#
-#
-# class TerminateProgram(unittest.TestCase):
-#
-#
-# class Greetings(unittest.TestCase):
+class MathOperation(unittest.TestCase):
+
+    def setUp(self):
+        # built in method for setting the operation
+        import operator
+        op_validation = {
+            '+': operator.add,
+            '-': operator.sub,
+            '*': operator.mul,
+            '/': operator.truediv
+        }
+        self.validation = Validation()
+        self.integer = 0
+        self.integer2 = 1
+        self.integer3 = -4
+        self.integer4 = 999999
+        self.float = 0.5
+        self.float2 = -0.5
+        self.float3 = 100.234
+        self.sum = operator.add
+        self.sub = operator.sub
+        self.mul = operator.mul
+        self.div = operator.truediv
+
+    def test_sum(self):
+        result = self.validation.do_math(self.float2, self.float2, self.sum)
+        self.assertEqual(self.validation.do_math(self.integer, self.integer2, self.sum), 1)
+        self.assertEqual(self.validation.do_math(self.integer, self.integer, self.sum), 0)
+        self.assertEqual(self.validation.do_math(self.integer2, self.integer3, self.sum), self.sum(self.integer2, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer4, self.integer2, self.sum), self.sum(self.integer4, self.integer2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer3, self.sum), self.sum(self.integer3, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer2, self.float, self.sum), self.sum(self.integer2, self.float))
+        self.assertEqual(self.validation.do_math(self.integer2, self.float2, self.sum), self.sum(self.integer2, self.float2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.float, self.sum), self.sum(self.integer3, self.float))
+        self.assertEqual(self.validation.do_math(self.integer3, self.float2, self.sum), self.sum(self.integer3, self.float2))
+        self.assertEqual(self.validation.do_math(self.integer4, self.float3, self.sum), self.sum(self.integer4, self.float3))
+        self.assertEqual(self.validation.do_math(self.float, self.float, self.sum), self.sum(self.float, self.float))
+        self.assertEqual(self.validation.do_math(self.float2, self.float, self.sum), self.sum(self.float2, self.float))
+        self.assertEqual(self.validation.do_math(self.float2, self.float2, self.sum), self.sum(self.float2, self.float2))
+
+    def test_subtraction(self):
+        result = self.validation.do_math(self.integer3, self.integer4, self.sub)
+        self.assertEqual(self.validation.do_math(self.integer2, self.integer, self.sub), self.sub(self.integer2, self.integer))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer2, self.sub), self.sub(self.integer3, self.integer2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer3, self.sub), self.sub(self.integer3, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer4, self.sub), self.sub(self.integer3, self.integer4))
+        self.assertEqual(self.validation.do_math(self.integer4, self.integer3, self.sub), self.sub(self.integer4, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer4, self.float, self.sub), self.sub(self.integer4, self.float))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.sub), self.sub(self.float, self.float2))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.sub), self.sub(self.float, self.float2))
+        self.assertEqual(self.validation.do_math(self.float2, self.float3, self.sub), self.sub(self.float2, self.float3))
+
+    def test_multiplication(self):
+        self.assertEqual(self.validation.do_math(self.integer2, self.integer, self.mul), self.mul(self.integer2, self.integer))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer2, self.mul), self.mul(self.integer3, self.integer2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer3, self.mul), self.mul(self.integer3, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer4, self.mul), self.mul(self.integer3, self.integer4))
+        self.assertEqual(self.validation.do_math(self.integer4, self.integer3, self.mul), self.mul(self.integer4, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer4, self.float, self.mul), self.mul(self.integer4, self.float))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.mul), self.mul(self.float, self.float2))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.mul), self.mul(self.float, self.float2))
+        self.assertEqual(self.validation.do_math(self.float2, self.float3, self.mul), self.mul(self.float2, self.float3))
+
+    def test_division(self):
+        result = self.validation.do_math(self.float2, self.float3, self.div)
+        self.assertEqual(self.validation.do_math(self.integer2, self.integer2, self.div), self.div(self.integer2, self.integer2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer2, self.div), self.div(self.integer3, self.integer2))
+        self.assertEqual(self.validation.do_math(self.integer3, self.integer3, self.div), self.div(self.integer3, self.integer3))
+        # self.assertEqual(self.validation.do_math(self.integer3, self.integer4, self.div), self.div(self.integer3, self.integer4))
+        self.assertEqual(self.validation.do_math(self.integer4, self.integer3, self.div), self.div(self.integer4, self.integer3))
+        self.assertEqual(self.validation.do_math(self.integer4, self.float, self.div), self.div(self.integer4, self.float))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.div), self.div(self.float, self.float2))
+        self.assertEqual(self.validation.do_math(self.float, self.float2, self.div), self.div(self.float, self.float2))
+        self.assertAlmostEqual(self.validation.do_math(self.float2, self.float3, self.div), self.div(self.float2, self.float3), places=3)
+
+        with self.assertRaises(ZeroDivisionError) as zd:
+            self.assertEqual(self.validation.do_math(self.integer2, self.integer, self.div),
+                             self.div(self.integer2, self.integer))
+        self.assertEqual(zd.exception.code, 1)
+
 
 if __name__ == "__main__":
     unittest.main()

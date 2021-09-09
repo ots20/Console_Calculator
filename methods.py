@@ -13,7 +13,7 @@ class Validation:
                     return value
                 except ValueError:
                     print("Not a number!")
-                    return False
+                    return None
 
     # Validates the inputs typed by the user to whether or not to end the program on any stage
     def exit_program(self, value):
@@ -56,10 +56,10 @@ class Validation:
         else:
             return operation
 
-    def do_math(self, val1, val2, op, string):
+    def do_math(self, val1, val2, op):
         result = op(float(val1), float(val2))
         result = round(result, 3)
-        print("{} {} {} = {}".format(round(val1, 3), string, round(val2, 3), str(result)))
+        # print("{} {} {} = {}".format(round(val1, 3), string, round(val2, 3), str(result)))
         return result
 
     # Method to ask to make another calculation or to exit

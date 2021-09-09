@@ -6,8 +6,8 @@ v = Validation()
 
 # Method where user inputs data and other methods are called to make the proper validations
 def calculate():
-    n1 = False
-    n2 = False
+    n1 = None
+    n2 = None
     op = None
     calc_again = False
 
@@ -24,13 +24,13 @@ def calculate():
     # if not v.greet("Omar"):
     #     quit()
 
-    while not n1:
+    while n1 is None:
         n1 = input('Type the first value: ')
         if v.exit_program(n1):
             quit()
         n1 = v.check_user_input(n1)
 
-    while not n2:
+    while n2 is None:
         n2 = input('Type the second value: ')
         if v.exit_program(n2):
             quit()
@@ -43,7 +43,8 @@ def calculate():
         op = v.op_validator(x)
 
     # this does the calculation
-    v.do_math(n1, n2, op, x)
+    result = v.do_math(n1, n2, op)
+    print("{} {} {} = {}".format(round(n1, 3), x, round(n2, 3), str(result)))
 
     while not calc_again:
         calc_again = input('''
