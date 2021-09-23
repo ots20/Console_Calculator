@@ -61,24 +61,6 @@ class InputValue(unittest.TestCase):
         self.assertIsNone(self.validation.check_user_input(self.invalid4))
 
 
-class ExitValidator(unittest.TestCase):
-
-    def setUp(self):
-        self.validation = Validation()
-        self.exit_valid = "exit"
-        self.exit_invalid = "exits"
-        self.exit_invalid_2 = " "
-        self.exit_invalid_3 = 2
-
-    def test_exit(self):
-        self.assertTrue(self.validation.exit_program(self.exit_valid))
-
-    def test_exit_false(self):
-        self.assertFalse(self.validation.exit_program(self.exit_invalid))
-        self.assertFalse(self.validation.exit_program(self.exit_invalid_2))
-        self.assertFalse(self.validation.exit_program(self.exit_invalid_3))
-
-
 class OperatorValidator(unittest.TestCase):
 
     def setUp(self):
@@ -93,16 +75,16 @@ class OperatorValidator(unittest.TestCase):
         self.not_valid4 = 2
 
     def test_valid_operators(self):
-        self.assertIsNotNone(self.validation.op_validator(self.valid_sum))
-        self.assertIsNotNone(self.validation.op_validator(self.valid_subtraction))
-        self.assertIsNotNone(self.validation.op_validator(self.valid_multiplication))
-        self.assertIsNotNone(self.validation.op_validator(self.valid_division))
+        self.assertIsNotNone(self.validation.operator(self.valid_sum))
+        self.assertIsNotNone(self.validation.operator(self.valid_subtraction))
+        self.assertIsNotNone(self.validation.operator(self.valid_multiplication))
+        self.assertIsNotNone(self.validation.operator(self.valid_division))
 
     def test_invalid_operator(self):
-        self.assertIsNone(self.validation.op_validator(self.not_valid))
-        self.assertIsNone(self.validation.op_validator(self.not_valid2))
-        self.assertIsNone(self.validation.op_validator(self.not_valid3))
-        self.assertIsNone(self.validation.op_validator(self.not_valid4))
+        self.assertIsNone(self.validation.operator(self.not_valid))
+        self.assertIsNone(self.validation.operator(self.not_valid2))
+        self.assertIsNone(self.validation.operator(self.not_valid3))
+        self.assertIsNone(self.validation.operator(self.not_valid4))
 
 
 class MathOperation(unittest.TestCase):
