@@ -18,9 +18,6 @@ class Validation:
     # Method to greet only the 1st time the calculator is run
     def greet(self, username):
         name = username
-        # if name is None or len(name) < 1 or name.isspace():
-        #     print("Hey, you need to type your name")
-        #     name = input()
         if name is None or len(name) < 1 or name.isspace():
             return
             # return None
@@ -42,7 +39,6 @@ class Validation:
         operation = op_validation.get(op)
         if operation is None:
             print("Unknown operator! type it again")
-            # return operation
         else:
             return operation
 

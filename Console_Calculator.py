@@ -9,7 +9,7 @@ def calculate():
     n1 = None
     n2 = None
     op = None
-    calc_again = True
+    calculate_again = True
 
     print("-Type two values to work with, then use one of these operators: '+', '-', '*', '/'")
     print("-You're able to finish the program at any stage by typing 'exit'")
@@ -20,9 +20,6 @@ def calculate():
         name = v.greet(name)
         if name is False:
             quit()
-
-    # if not v.greet("Omar"):
-    #     quit()
 
     while n1 is None:
         n1 = input('Type the first value: ')
@@ -46,18 +43,18 @@ def calculate():
     result = v.do_math(n1, n2, op)
     print("{} {} {} = {}".format(round(n1, 3), x, round(n2, 3), str(result)))
 
-    while calc_again is True:
-        calc_again = input('''
+    while calculate_again is True:
+        calculate_again = input('''
     # Do you want to calculate again?
     # Please type Y for YES or N for NO.
     #         ''')
-        if calc_again.upper() == 'Y':
-            calc_again = False
-        elif calc_again.upper() == 'N':
+        if calculate_again.upper() == 'Y':
+            calculate_again = False
+        elif calculate_again.upper() == 'N':
             print('See you later!')
             quit()
         else:
-            calc_again = True
+            calculate_again = True
 
     calculate()
 
