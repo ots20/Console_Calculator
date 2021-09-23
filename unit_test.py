@@ -1,5 +1,5 @@
 import unittest
-from methods import Validation
+from my_functions import Validation
 
 
 class NameValidator(unittest.TestCase):

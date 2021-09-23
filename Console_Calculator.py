@@ -1,4 +1,4 @@
-from methods import Validation
+from my_functions import Validation
 # from methods import *
 
 v = Validation()

@@ -4,17 +4,16 @@ class Validation:
     def check_user_input(self, val):
         num = val
         while True:
+            # try:
+            #     value = int(num)
+            #     return value
+            # except ValueError:
             try:
-                value = int(num)
+                value = float(num)
                 return value
             except ValueError:
-                try:
-                    value = float(num)
-                    return value
-                except ValueError:
-                    print("Not a number!")
-                    return
-                    # return None
+                print("Not a number!")
+                return
 
     # Method to greet only the 1st time the calculator is run
     def greet(self, username):
