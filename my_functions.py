@@ -1,5 +1,6 @@
 class Validation:
 
+
     # Function to validate if the user inputs a number
     def check_user_input(self, val):
         num = val
